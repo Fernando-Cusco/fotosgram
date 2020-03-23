@@ -14,4 +14,8 @@
   <!-- posts -->
   <app-posts [posts]="posts"></app-posts>
   <!-- infinete scroll -->
+  <ion-infinite-scroll threshold="150px" [disabled]="false" position="bottom" (ionInfinite)="siguientesPosts($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando mas posts">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
