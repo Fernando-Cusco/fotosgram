@@ -1,7 +1,7 @@
 <ion-content>
 
 
-  <ion-slides class="mainSlide">
+  <ion-slides class="mainSlide" #slideLogin>
 
     <ion-slide>
 
@@ -124,13 +124,13 @@
     <ion-row>
 
       <ion-col>
-        <ion-button shape="round" expand="full" size="small" fill="outline" color="tertiary">
+        <ion-button shape="round" expand="full" size="small" fill="outline" color="tertiary" (click)="mostrarLogin()">
           Ingresar
         </ion-button>
       </ion-col>
 
       <ion-col>
-        <ion-button shape="round" expand="full" size="small" fill="outline" color="tertiary">
+        <ion-button shape="round" expand="full" size="small" fill="outline" color="tertiary" (click)="mostrarRegistro()">
           Registrarme
         </ion-button>
       </ion-col>
