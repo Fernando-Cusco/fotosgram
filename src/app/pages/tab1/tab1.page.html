@@ -10,11 +10,19 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" color="light">
+  <ion-refresher slot="fixed" (ionRefresh)="recargar($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="bubbles"
+      refreshingText="Recargando...">
+    </ion-refresher-content>
+  </ion-refresher>
   <!-- refresh -->
   <!-- posts -->
   <app-posts [posts]="posts"></app-posts>
   <!-- infinete scroll -->
-  <ion-infinite-scroll threshold="150px" [disabled]="false" position="bottom" (ionInfinite)="siguientesPosts($event)">
+  <ion-infinite-scroll  threshold="150px" [disabled]="!habilitado" position="bottom" (ionInfinite)="siguientesPosts($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando mas posts">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>

@@ -18,7 +18,10 @@ export class PostsService {
   constructor(private http: HttpClient) { }
 
 
-  getPosts(): Observable<RespuestaPosts> {
+  getPosts(pull: boolean = false): Observable<RespuestaPosts> {
+    if(pull) {
+      this.paginaPost = 0;
+    }
     this.paginaPost ++;
     return this.http.get<RespuestaPosts>(`${URL}/post/posts?pagina=${this.paginaPost}`);
   }

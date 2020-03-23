@@ -10,6 +10,7 @@ import { Post } from '../../interfaces/interfaces';
 export class Tab1Page implements OnInit {
 
   posts: Post[] = [];
+  habilitado: boolean = true;
 
   constructor(private postsService: PostsService) { }
 
@@ -18,18 +19,24 @@ export class Tab1Page implements OnInit {
   }
 
 
-  siguientesPosts(event?) {
-    this.postsService.getPosts().subscribe(res => {
+  siguientesPosts(event?, pull:boolean = false) {
+    
+    this.postsService.getPosts(pull).subscribe(res => {
       console.log(res);
       this.posts.push(...res.posts);
       if (event) {
         event.target.complete();
         if (res.posts.length === 0) {
-          event.target.disabled = true;
+          this.habilitado = false;
         }
       }
     });
+  }
 
+  recargar(event) {
+    this.siguientesPosts(event, true);
+    this.habilitado = true;
+      this.posts = [];
   }
 
 }
