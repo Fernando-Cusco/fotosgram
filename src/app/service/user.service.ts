@@ -11,7 +11,7 @@ const URL = environment.url;
 export class UserService {
 
   token: string = null;
-  
+
   constructor(private http: HttpClient, private storage: Storage) { }
 
 
@@ -21,9 +21,24 @@ export class UserService {
       email,
       password
     }
-    return this.http.post(`${URL}/user/login`, data).subscribe(res => {
-      console.log(res);
+    return new Promise(resolve => {
+      this.http.post(`${URL}/user/login`, data).subscribe(res => {
+        console.log(res);
+        if (res['mensaje'] === 'datos correctos') {
+          this.guardarToken(res['token']);
+          resolve(true);
+        } else {
+          this.token = null;
+          this.storage.clear();
+          resolve(false);
+        }
+      });
     });
+  }
+
+  async guardarToken(token: string) {
+    this.token = token;
+    await this.storage.set('token', token);
   }
 
 

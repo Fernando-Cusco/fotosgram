@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, NavController } from '@ionic/angular';
 import { UserService } from '../../service/user.service';
 
 @Component({
@@ -55,19 +55,24 @@ export class LoginPage implements OnInit {
     email: 'admin@admin.com',
     password: 'admin'
   };
-
-  constructor(private userService: UserService) { }
+                                                //tiene la propiedad para que  no regrese atras
+  constructor(private userService: UserService, private navCtrl: NavController) { }
 
   ngOnInit() {
     this.slideLogin.lockSwipes(true);
   }
 
-  login(fLogin: NgForm) {
+  async login(fLogin: NgForm) {
     if(!fLogin.valid) {
       return;
     }
-    this.userService.userLogin(this.loginUser.email, this.loginUser.password);
-    
+    const valido = await this.userService.userLogin(this.loginUser.email, this.loginUser.password);
+    if(valido) {
+      //navgear al tabs
+      this.navCtrl.navigateRoot('/main/tabs/tab1', {animated: true});
+    } else {
+      //mostrar alert de datos no correctos
+    }
   }
 
   registro(fRefistro: NgForm) {
