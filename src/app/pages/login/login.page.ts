@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonSlides } from '@ionic/angular';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -50,15 +51,23 @@ export class LoginPage implements OnInit {
     slidesPerView: 3.5
   };
 
-  constructor() { }
+  loginUser = {
+    email: 'admin@admin.com',
+    password: 'admin'
+  };
+
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
     this.slideLogin.lockSwipes(true);
   }
 
   login(fLogin: NgForm) {
-    console.log(fLogin.valid);
-
+    if(!fLogin.valid) {
+      return;
+    }
+    this.userService.userLogin(this.loginUser.email, this.loginUser.password);
+    
   }
 
   registro(fRefistro: NgForm) {
