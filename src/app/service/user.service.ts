@@ -15,7 +15,7 @@ const URL = environment.url;
 export class UserService {
 
   token: string = null;
-  user: User = {};
+  private user: User = {};
 
   constructor(private http: HttpClient, private storage: Storage, private navCtrl: NavController) { }
 
@@ -57,6 +57,14 @@ export class UserService {
     });
   }
 
+
+  getUser() {
+    if(!this.user._id) {
+      this.validarToken();
+    }
+    return {...this.user}
+  }
+
   async guardarToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
@@ -75,6 +83,7 @@ export class UserService {
       this.http.get(`${URL}/user/`, {headers: headers}).subscribe(res => {
         if(res['mensaje'] === 'ok') {
           this.user = res;
+          
           resolve(true);
         } else {
           this.navCtrl.navigateRoot('/login');
