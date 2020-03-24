@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { IonSlides, NavController } from '@ionic/angular';
 import { UserService } from '../../service/user.service';
 import { UiServiceService } from '../../service/ui-service.service';
+import { User } from '../../interfaces/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -56,6 +57,12 @@ export class LoginPage implements OnInit {
     email: 'admin@admin.com',
     password: 'admin'
   };
+
+  userRegister: User = {
+    email: 'test12@test.com',
+    password: 'admin',
+    nombre: 'Jose Pepe'
+  };
                                                 //tiene la propiedad para que  no regrese atras
   constructor(private userService: UserService, private navCtrl: NavController, private UiService: UiServiceService) { }
 
@@ -77,9 +84,19 @@ export class LoginPage implements OnInit {
     }
   }
 
-  registro(fRefistro: NgForm) {
+  async registro(fRefistro: NgForm) {
     console.log(fRefistro.valid);
-
+    if(!fRefistro.valid) {
+      return;
+    }
+    const valido = await this.userService.userRegister(this.userRegister);
+    if(valido) {
+      //navgear al tabs
+      this.navCtrl.navigateRoot('/main/tabs/tab1', {animated: true});
+    } else {
+      //mostrar alert de datos no correctos
+      this.UiService.alertaInformativa('El email ya existe, intenta con otro');
+    }
   }
 
   seleccionarAvatar(avatar) {

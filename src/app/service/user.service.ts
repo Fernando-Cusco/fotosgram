@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Storage } from '@ionic/storage';
 import { environment } from '../../environments/environment';
+import { User } from '../interfaces/interfaces';
+
 
 const URL = environment.url;
 
@@ -26,6 +28,22 @@ export class UserService {
         console.log(res);
         if (res['mensaje'] === 'datos correctos') {
           this.guardarToken(res['token']);
+          resolve(true);
+        } else {
+          this.token = null;
+          this.storage.clear();
+          resolve(false);
+        }
+      });
+    });
+  }
+
+  userRegister(user: User) {
+    return new Promise(resolve => {
+      this.http.post(`${URL}/user/create`, user).subscribe(res => {
+        console.log(res);
+        if(res['mensaje'] === 'Correcto') {
+          this.guardarToken(res['user']);
           resolve(true);
         } else {
           this.token = null;
