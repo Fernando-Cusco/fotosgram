@@ -28,8 +28,9 @@ export class Tab3Page implements OnInit{
     if(!fUpdate.valid) {
       return;
     }
+    
     const updated = await this.userService.updateUser(this.user['usuario']);
-        
+     
     if(updated) {
         this.UiService.mostrarMensaje('Usuario actualizado');
     } else {

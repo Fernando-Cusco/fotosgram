@@ -98,7 +98,7 @@ export class UserService {
   }
 
   updateUser(user: User) {
-    
+    console.log(user);
     const headers = new HttpHeaders({
       'token': this.token
     });
@@ -106,6 +106,7 @@ export class UserService {
 
       this.http.put(`${URL}/user/update`, user, {headers: headers}).subscribe(res => {
         
+        console.log(res);
         
         if(res['mensaje'] === 'Actualizacion correcta') {
           this.guardarToken(res['token']);
