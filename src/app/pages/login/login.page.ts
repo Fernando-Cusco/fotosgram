@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { IonSlides, NavController } from '@ionic/angular';
 import { UserService } from '../../service/user.service';
+import { UiServiceService } from '../../service/ui-service.service';
 
 @Component({
   selector: 'app-login',
@@ -56,7 +57,7 @@ export class LoginPage implements OnInit {
     password: 'admin'
   };
                                                 //tiene la propiedad para que  no regrese atras
-  constructor(private userService: UserService, private navCtrl: NavController) { }
+  constructor(private userService: UserService, private navCtrl: NavController, private UiService: UiServiceService) { }
 
   ngOnInit() {
     this.slideLogin.lockSwipes(true);
@@ -72,6 +73,7 @@ export class LoginPage implements OnInit {
       this.navCtrl.navigateRoot('/main/tabs/tab1', {animated: true});
     } else {
       //mostrar alert de datos no correctos
+      this.UiService.alertaInformativa('Usuario y Contraseña no son correctos');
     }
   }
 
