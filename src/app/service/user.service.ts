@@ -97,4 +97,24 @@ export class UserService {
     this.token = await this.storage.get('token') || null;
   }
 
+  updateUser(user: User) {
+    
+    const headers = new HttpHeaders({
+      'token': this.token
+    });
+    return new Promise(resolve => {
+
+      this.http.put(`${URL}/user/update`, user, {headers: headers}).subscribe(res => {
+        
+        
+        if(res['mensaje'] === 'Actualizacion correcta') {
+          this.guardarToken(res['token']);
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      });
+    });
+  }
+
 }

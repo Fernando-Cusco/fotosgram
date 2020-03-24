@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, CanLoad } from '@angular/router';
 import { Observable } from 'rxjs';
 import { UserService } from '../service/user.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserGuard implements CanActivate {
+export class UserGuard implements CanLoad {
 
   constructor(private userService: UserService) {
 
   }
 
 
-  canLoad(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  canLoad(): Observable<boolean> | Promise<boolean> | boolean {
     return this.userService.validarToken();
   }
 
-  canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return false;
-  }
   
 }
