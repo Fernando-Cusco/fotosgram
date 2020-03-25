@@ -102,16 +102,16 @@
     <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
         <string>La app necesita tu ubicacion actual</string>
     </edit-config>
-    <edit-config target="NSCameraUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
         <string>Se necesita permiso para tomar fotos</string>
     </edit-config>
-    <edit-config target="NSPhotoLibraryUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryUsageDescription">
         <string>Se necesita permiso a la libreria</string>
     </edit-config>
-    <edit-config target="NSLocationWhenInUseUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config file="*-Info.plist" mode="merge" target="NSLocationWhenInUseUsageDescription">
         <string>Se necesita permiso de tu ubicacion</string>
     </edit-config>
-    <edit-config target="NSPhotoLibraryAddUsageDescription" file="*-Info.plist" mode="merge">
+    <edit-config file="*-Info.plist" mode="merge" target="NSPhotoLibraryAddUsageDescription">
         <string>Se necesita permiso para guardar fotos</string>
     </edit-config>
 </widget>
