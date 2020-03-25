@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { PostsService } from '../../service/posts.service';
 import { Router } from '@angular/router';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
-import { Camera } from '@ionic-native/camera/ngx';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 declare var window: any;
 
