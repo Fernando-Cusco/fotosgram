@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { RespuestaPosts, Post } from '../interfaces/interfaces';
 import { UserService } from './user.service';
-import { resolve } from 'url';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer/ngx';
 
 
 const URL = environment.url;
@@ -19,7 +19,7 @@ export class PostsService {
   nuevoPost = new EventEmitter<Post>();
 
 
-  constructor(private http: HttpClient, private userService: UserService) { }
+  constructor(private http: HttpClient, private userService: UserService, private fileTransfer: FileTransfer) { }
 
 
   getPosts(pull: boolean = false): Observable<RespuestaPosts> {
@@ -41,6 +41,24 @@ export class PostsService {
         this.nuevoPost.emit(res['post']);
         resolve(true);
       });
+    });
+  }
+
+  uploadImage(img: string) {
+    const options: FileUploadOptions = {
+      fileKey: 'image',                                   //llave que especifica como recibira el servidor, en este caso 'image'
+      headers: {
+        'token': this.userService.token                   //token del usuario
+      }
+    };
+
+    //proceso de subida de imagen
+    const fileTransfer: FileTransferObject = this.fileTransfer.create();
+    //proceso de carga
+    fileTransfer.upload(img, `${URL}/post/upload`, options).then( data => {
+      console.log(data);
+    }).catch(err => {
+      console.log(err, 'error');
     });
   }
 
