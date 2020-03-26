@@ -50,10 +50,10 @@ export class UserService {
 
   userRegister(user: User) {
     return new Promise(resolve => {
-      this.http.post(`${URL}/user/create`, user).subscribe(res => {
+      this.http.post(`${URL}/user/create`, user).subscribe(async res => {
         console.log(res);
         if(res['mensaje'] === 'Correcto') {
-          this.guardarToken(res['user']);
+          await this.guardarToken(res['user']);
           resolve(true);
         } else {
           this.token = null;
