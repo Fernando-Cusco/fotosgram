@@ -20,7 +20,7 @@ export class Tab3Page implements OnInit{
   }
 
   logout() {
-    
+    this.userService.userLogout();
   }
 
   async updateUser(fUpdate: NgForm) {

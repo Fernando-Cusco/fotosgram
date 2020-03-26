@@ -41,6 +41,13 @@ export class UserService {
     });
   }
 
+  userLogout() {
+    this.token = null;
+    this.user = null;
+    this.storage.clear();
+    this.navCtrl.navigateRoot('/login', {animated: true});
+  }
+
   userRegister(user: User) {
     return new Promise(resolve => {
       this.http.post(`${URL}/user/create`, user).subscribe(res => {
@@ -68,6 +75,7 @@ export class UserService {
   async guardarToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
+    
   }
 
   async validarToken(): Promise<boolean> {
