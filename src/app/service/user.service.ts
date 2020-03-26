@@ -27,10 +27,10 @@ export class UserService {
       password
     }
     return new Promise(resolve => {
-      this.http.post(`${URL}/user/login`, data).subscribe(res => {
+      this.http.post(`${URL}/user/login`, data).subscribe(async res => {
         console.log(res);
         if (res['mensaje'] === 'datos correctos') {
-          this.guardarToken(res['token']);
+          await this.guardarToken(res['token']);
           resolve(true);
         } else {
           this.token = null;
@@ -75,7 +75,7 @@ export class UserService {
   async guardarToken(token: string) {
     this.token = token;
     await this.storage.set('token', token);
-    
+    await this.validarToken();
   }
 
   async validarToken(): Promise<boolean> {
