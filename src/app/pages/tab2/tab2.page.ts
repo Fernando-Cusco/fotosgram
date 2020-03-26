@@ -20,7 +20,7 @@ export class Tab2Page {
     posicion: false
   }
 
-  constructor(private postService: PostsService, private route: Router, private geolocation: Geolocation, private camera: Camera) {}
+  constructor(private postService: PostsService, private route: Router, private geolocation: Geolocation, private camera: Camera) { }
 
 
   async crearPost() {
@@ -34,7 +34,7 @@ export class Tab2Page {
   }
 
   getUbicacion() {
-    if(!this.post.posicion) {
+    if (!this.post.posicion) {
       this.post.coords = null;
       this.cargandoUbicacion = false;
       return;
@@ -44,10 +44,10 @@ export class Tab2Page {
       const coords = `${resp.coords.latitude},${resp.coords.longitude}`;
       this.post.coords = coords;
       this.cargandoUbicacion = false;
-     }).catch((error) => {
+    }).catch((error) => {
       this.cargandoUbicacion = false;
-     });
-    
+    });
+
   }
 
   camara() {
@@ -59,7 +59,23 @@ export class Tab2Page {
       correctOrientation: true,
       sourceType: this.camera.PictureSourceType.CAMERA
     };
+    this.procesarImagen(options);
 
+  }
+
+  libreria() {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE,
+      correctOrientation: true,
+      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY
+    };
+    this.procesarImagen(options);
+  }
+
+  procesarImagen(options: CameraOptions) {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64 (DATA_URL):
@@ -67,10 +83,10 @@ export class Tab2Page {
       const img = window.Ionic.WebView.convertFileSrc(imageData);
       this.tempImages.push(img);
       console.log(img);
-      
-     }, (err) => {
+
+    }, (err) => {
       // Handle error
-     });
+    });
   }
 
 }
